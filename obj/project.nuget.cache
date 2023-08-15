@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "sO/3pskkFq0gC6ifF2L+qzXB2qooLMTrZBRIPNF38K08aNubkxwcEYB9COhIRy6MSuD71FwaoJgXlZqiAKMjtA==",
+  "dgSpecHash": "cCJ2uf0QJ4RCR06CY4bcr3Jp4G7Zrtw57BzAORfKMoXwdOfJuKxGxsHcwGb+BNNPXWs8n40MIRvbJ1gWygrpUg==",
   "success": true,
   "projectFilePath": "/Users/tpeck/Projects/git-thing/git-thing.csproj",
   "expectedPackageFiles": [
+    "/Users/tpeck/.nuget/packages/consoletableext/3.2.0/consoletableext.3.2.0.nupkg.sha512",
     "/Users/tpeck/.nuget/packages/libgit2sharp/0.27.2/libgit2sharp.0.27.2.nupkg.sha512",
     "/Users/tpeck/.nuget/packages/libgit2sharp.nativebinaries/2.0.320/libgit2sharp.nativebinaries.2.0.320.nupkg.sha512"
   ],

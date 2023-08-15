@@ -3,12 +3,14 @@ using System.IO;
 using System.Linq;
 using LibGit2Sharp;
 using System.Collections.Generic;
+using ConsoleTableExt;
 
 public class Program
 {
     public static void Main(string[] args)
     {
-        string repositoryPath = @"C:\path\to\your\local\repository";
+        Console.WriteLine("Give me a path");
+        var repositoryPath = Console.ReadLine();
 
         using (var repo = new Repository(repositoryPath))
         {
@@ -17,8 +19,8 @@ public class Program
             foreach (var commit in repo.Commits)
             {
                 var changes = commit.Parents.Any()
-                    ? repo.Diff.Compare<TreeChanges>(commit.Parents.First().Tree, commit.Tree)
-                    : repo.Diff.Compare<TreeChanges>(null, commit.Tree);
+                    ? repo.Diff.Compare<Patch>(commit.Parents.First().Tree, commit.Tree)
+                    : repo.Diff.Compare<Patch>(null, commit.Tree);
 
                 string authorName = commit.Author.Name;
 
@@ -37,11 +39,16 @@ public class Program
             }
 
             Console.WriteLine("Author Changes:");
+            Console.WriteLine(new string('-', 40));
+            Console.WriteLine("| Author".PadRight(20) + " | Additions | Deletions |");
+            Console.WriteLine(new string('-', 40));
 
             foreach (var kvp in authorChanges)
             {
-                Console.WriteLine($"{kvp.Key}: {kvp.Value.additions} additions, {kvp.Value.deletions} deletions");
+                Console.WriteLine($"| {kvp.Key.PadRight(20)} | {kvp.Value.additions.ToString().PadRight(9)} | {kvp.Value.deletions.ToString().PadRight(9)} |");
             }
+
+            Console.WriteLine(new string('-', 40));
         }
     }
 }
