@@ -13,27 +13,36 @@ public class Program
 
         using (var repo = new Repository(repositoryPath))
         {
-            var authorCommitCounts = new Dictionary<string, int>();
+            var authorChanges = new Dictionary<string, (int additions, int deletions)>();
 
             foreach (var commit in repo.Commits)
             {
+                var changes = commit.Parents.Any()
+                    ? repo.Diff.Compare<TreeChanges>(commit.Parents.First().Tree, commit.Tree)
+                    : repo.Diff.Compare<TreeChanges>(null, commit.Tree);
+
                 string authorName = commit.Author.Name;
 
-                if (authorCommitCounts.ContainsKey(authorName))
+                int additions = changes.Sum(changes => change.LinesAdded);
+                int deletions = changes.Sum(changes => changes.LinesDeleted);
+
+
+                if (authorChanges.ContainsKey(authorName))
                 {
-                    authorCommitCounts[authorName]++;
+                    var (prevAdditions, prevDeletions) = authorChanges[authorName];
+                    authorChanges[authorName] = (prevAdditions + additions, prevDeletions + deletions);
                 }
                 else
                 {
-                    authorCommitCounts[authorName] = 1;
+                    authorChanges[authorName] = (additions, deletions)
                 }
             }
 
-            Console.WriteLine("Author Commit Counts:");
+            Console.WriteLine("Author Changes:");
 
-            foreach (var kvp in authorCommitCounts)
+            foreach (var kvp in authorChanges)
             {
-                Console.WriteLine($"{kvp.Key}: {kvp.Value} commits");
+                Console.WriteLine($"{kvp.Key}: {kvp.Value.additions} additions, {kvp.Value.deletions} deletions");
             }
         }
     }
