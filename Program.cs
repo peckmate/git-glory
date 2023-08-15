@@ -9,7 +9,7 @@ public class Program
     public static void Main(string[] args)
     {
         Console.WriteLine("Enter the path to the repository: ");
-        string repositoryPath = Console.Readline();
+        string repositoryPath = Console.ReadLine();
 
         using (var repo = new Repository(repositoryPath))
         {
