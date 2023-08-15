@@ -38,17 +38,21 @@ public class Program
                 }
             }
 
-            Console.WriteLine("Author Changes:");
-            Console.WriteLine(new string('-', 40));
-            Console.WriteLine("| Author".PadRight(20) + " | Additions | Deletions |");
-            Console.WriteLine(new string('-', 40));
+            tableData = new List<List<object>>();
 
             foreach (var kvp in authorChanges)
             {
-                Console.WriteLine($"| {kvp.Key.PadRight(20)} | {kvp.Value.additions.ToString().PadRight(9)} | {kvp.Value.deletions.ToString().PadRight(9)} |");
+                var row = new List<object>();
+                row.Add(kvp.key);
+                row.Add(kvp.Value.additions);
+                row.Add(kvp.Value.deletions);
+                tableData.add(row);
             }
 
-            Console.WriteLine(new string('-', 40));
+            ConsoleTableBuilder
+                .From(tableData)
+                .WithFormat(ConsoleTableBuilderFormat.Alternative)
+                .ExportAndWriteLine(TableAlignment.Center);
         }
     }
 }
