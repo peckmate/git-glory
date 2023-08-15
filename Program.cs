@@ -38,21 +38,22 @@ public class Program
                 }
             }
 
-            tableData = new List<List<object>>();
+            var tableData = new List<List<object>>();
 
             foreach (var kvp in authorChanges)
             {
                 var row = new List<object>();
-                row.Add(kvp.key);
+                row.Add(kvp.Key);
                 row.Add(kvp.Value.additions);
                 row.Add(kvp.Value.deletions);
-                tableData.add(row);
+                tableData.Add(row);
             }
 
             ConsoleTableBuilder
                 .From(tableData)
-                .WithFormat(ConsoleTableBuilderFormat.Alternative)
-                .ExportAndWriteLine(TableAlignment.Center);
+                .WithTitle("Ch-ch-changes", ConsoleColor.Yellow, ConsoleColor.DarkGray)
+                .WithColumn("Name", "Additions", "Deletions")
+                .ExportAndWriteLine();
         }
     }
 }
