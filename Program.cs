@@ -8,8 +8,7 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        Console.WriteLine("Enter the path to the repository: ");
-        string repositoryPath = Console.ReadLine();
+        string repositoryPath = @"C:\path\to\your\local\repository";
 
         using (var repo = new Repository(repositoryPath))
         {
@@ -23,9 +22,8 @@ public class Program
 
                 string authorName = commit.Author.Name;
 
-                int additions = changes.Sum(changes => change.LinesAdded);
-                int deletions = changes.Sum(changes => changes.LinesDeleted);
-
+                int additions = changes.Sum(change => change.LinesAdded);
+                int deletions = changes.Sum(change => change.LinesDeleted);
 
                 if (authorChanges.ContainsKey(authorName))
                 {
@@ -34,7 +32,7 @@ public class Program
                 }
                 else
                 {
-                    authorChanges[authorName] = (additions, deletions)
+                    authorChanges[authorName] = (additions, deletions);
                 }
             }
 
@@ -46,4 +44,3 @@ public class Program
             }
         }
     }
-}
