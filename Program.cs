@@ -5,26 +5,27 @@ using LibGit2Sharp;
 
 public class Program
 {
-  public static void Main(string[] args)
-  {
-    Console.WriteLine("Enter the path to the repository: ");
-    var repositoryPath = Console.ReadLine();
-    using (var repo = new Repository(repositoryPath))
+    public static void Main(string[] args)
     {
-      var authorNames = new List<string>();
+       var repositoryPath = Console.ReadLine();
 
-      foreach (var commit in repo.Commits)
-      {
-        authorNames.Add(commit.Author.Name);
-      }
+        using (var repo = new Repository(repositoryPath))
+        {
+            var authorNames = new List<string>();
 
-      var uniqueAuthorNames = authorNames.Distinct();
+            foreach (var commit in repo.Commits)
+            {
+                authorNames.Add(commit.Author.Name);
+            }
 
-      Console.WriteLine*("Unique Author Names:");
-      foreach (var authorName in uniqueAuthorNames)
-      {
-        Console.WriteLine(authorName);s
-      }
+            var uniqueAuthorNames = authorNames.Distinct();
+
+            Console.WriteLine("Unique Author Names:");
+
+            foreach (var authorName in uniqueAuthorNames)
+            {
+                Console.WriteLine(authorName);
+            }
+        }
     }
-  }
 }
