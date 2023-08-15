@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using Libgit2Sharp;
+using LibGit2Sharp;
 using System.Collections.Generic;
 
 public class Program
