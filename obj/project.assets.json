@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     "net7.0": {
+      "ConsoleTableExt/3.2.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/ConsoleTableExt.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/ConsoleTableExt.dll": {}
+        }
+      },
       "LibGit2Sharp/0.27.2": {
         "type": "package",
         "dependencies": {
@@ -76,6 +85,20 @@
     }
   },
   "libraries": {
+    "ConsoleTableExt/3.2.0": {
+      "sha512": "IhaHj6R2vSbb781aRXngan6nKRp8R5rnL2X5fL0uRW2wRiFyCIUh81T/QOih0//PjzoXMk2Uv4ayBAGDLH338A==",
+      "type": "package",
+      "path": "consoletableext/3.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "consoletableext.3.2.0.nupkg.sha512",
+        "consoletableext.nuspec",
+        "lib/net35/ConsoleTableExt.dll",
+        "lib/net46/ConsoleTableExt.dll",
+        "lib/netstandard2.0/ConsoleTableExt.dll"
+      ]
+    },
     "LibGit2Sharp/0.27.2": {
       "sha512": "TYIfwuumwmZFjxwRFz5y2MyTA8jc19MejSyRRTCS/TflhrdQPH7H84ueyCpY0+xkNWThEd+dCnkuf7XuH3tt+A==",
       "type": "package",
@@ -127,6 +150,7 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
+      "ConsoleTableExt >= 3.2.0",
       "LibGit2Sharp >= 0.27.2"
     ]
   },
@@ -167,6 +191,10 @@
       "net7.0": {
         "targetAlias": "net7.0",
         "dependencies": {
+          "ConsoleTableExt": {
+            "target": "Package",
+            "version": "[3.2.0, )"
+          },
           "LibGit2Sharp": {
             "target": "Package",
             "version": "[0.27.2, )"

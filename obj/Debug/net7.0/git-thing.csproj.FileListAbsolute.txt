@@ -26,3 +26,4 @@
 /Users/tpeck/Projects/git-thing/obj/Debug/net7.0/git-thing.pdb
 /Users/tpeck/Projects/git-thing/obj/Debug/net7.0/git-thing.genruntimeconfig.cache
 /Users/tpeck/Projects/git-thing/obj/Debug/net7.0/ref/git-thing.dll
+/Users/tpeck/Projects/git-thing/bin/Debug/net7.0/ConsoleTableExt.dll
