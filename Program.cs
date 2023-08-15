@@ -11,12 +11,14 @@ public class Program
         Console.WriteLine("Enter the path to the repository: ");
         string repositoryPath = Console.Readline();
 
-        using (var repo = new Repository(repositoryPath));
+        using (var repo = new Repository(repositoryPath))
         {
             var authorCommitCounts = new Dictionary<string, int>();
 
             foreach (var commit in repo.Commits)
             {
+                string authorName = commit.Author.Name;
+
                 if (authorCommitCounts.ContainsKey(authorName))
                 {
                     authorCommitCounts[authorName]++;
@@ -31,7 +33,7 @@ public class Program
 
             foreach (var kvp in authorCommitCounts)
             {
-                console.WriteLine($"{kvp.Key}: {kvp.Value} commits");
+                Console.WriteLine($"{kvp.Key}: {kvp.Value} commits");
             }
         }
     }
