@@ -41,50 +41,57 @@ namespace GitGlory
 
         public static void CountChanges(string repositoryPath) 
         { 
-            using (var repo = new Repository(repositoryPath))
+            try
+            {
+                using (var repo = new Repository(repositoryPath))
+                { 
+                    var authorChanges = new Dictionary<string, (int additions, int deletions)>(); 
+
+                    foreach (var commit in repo.Commits) 
+                    { 
+                        var changes = commit.Parents.Any() 
+                            ? repo.Diff.Compare<Patch>(commit.Parents.First().Tree, commit.Tree)
+                            : repo.Diff.Compare<Patch>(null, commit.Tree); 
+                        
+                        string authorName = commit.Author.Name; 
+
+                        int additions = changes.Sum(change => change.LinesAdded); 
+                        int deletions = changes.Sum(change => change.LinesDeleted); 
+
+                        if (authorChanges.ContainsKey(authorName))
+                        { 
+                            var (prevAdditions, prevDeletions) = authorChanges[authorName]; 
+                            authorChanges[authorName] = (prevAdditions + additions, prevDeletions + deletions); 
+                        }
+                        else 
+                        { 
+                            authorChanges[authorName] = (additions, deletions); 
+
+                        }
+                    }
+
+                    var tableData = new List<List<object>>(); 
+
+                    foreach (var kvp in authorChanges) 
+                    { 
+                        var row = new List<object>(); 
+                        row.Add(kvp.Key); 
+                        row.Add(kvp.Value.additions); 
+                        row.Add(kvp.Value.deletions);
+                        tableData.Add(row); 
+                    }
+
+                    ConsoleTableBuilder
+                        .From(tableData)
+                        .WithTitle("Ch-ch-changes", ConsoleColor.Yellow, ConsoleColor.DarkGray)
+                        .WithColumn("Name", "Additions", "Deletions")
+                        .ExportAndWriteLine();
+
+                }
+            } 
+            catch(Exception ex) 
             { 
-                var authorChanges = new Dictionary<string, (int additions, int deletions)>(); 
-
-                foreach (var commit in repo.Commits) 
-                { 
-                    var changes = commit.Parents.Any() 
-                        ? repo.Diff.Compare<Patch>(commit.Parents.First().Tree, commit.Tree)
-                        : repo.Diff.Compare<Patch>(null, commit.Tree); 
-                    
-                    string authorName = commit.Author.Name; 
-
-                    int additions = changes.Sum(change => change.LinesAdded); 
-                    int deletions = changes.Sum(change => change.LinesDeleted); 
-
-                    if (authorChanges.ContainsKey(authorName))
-                    { 
-                        var (prevAdditions, prevDeletions) = authorChanges[authorName]; 
-                        authorChanges[authorName] = (prevAdditions + additions, prevDeletions + deletions); 
-                    }
-                    else 
-                    { 
-                        authorChanges[authorName] = (additions, deletions); 
-
-                    }
-                }
-
-                var tableData = new List<List<object>>(); 
-
-                foreach (var kvp in authorChanges) 
-                { 
-                    var row = new List<object>(); 
-                    row.Add(kvp.Key); 
-                    row.Add(kvp.Value.additions); 
-                    row.Add(kvp.Value.deletions);
-                    tableData.Add(row); 
-                }
-
-                ConsoleTableBuilder
-                    .From(tableData)
-                    .WithTitle("Ch-ch-changes", ConsoleColor.Yellow, ConsoleColor.DarkGray)
-                    .WithColumn("Name", "Additions", "Deletions")
-                    .ExportAndWriteLine();
-
+                Console.WriteLine("An error occurred: " + ex.Message);
             }
         }
     }
