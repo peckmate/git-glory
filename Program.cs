@@ -6,83 +6,86 @@ using System.Collections.Generic;
 using ConsoleTableExt;
 using System.ComponentModel.Design;
 
-public class Program 
-{ 
-    public static void Main(string[] args) 
+namespace GitGlory
+{
+    public class RepositoryAnalyzer 
     { 
-        while (true) 
+        public static void Main(string[] args) 
         { 
-            Console.WriteLine("Menu:"); 
-            Console.WriteLine("1. Count Changes"); 
-            Console.WriteLine("0. Exit"); 
-            Console.Write("Select an option: "); 
-
-            int option = int.Parse(Console.ReadLine());
-
-            switch(option)
+            while (true) 
             { 
-                case 1: 
-                    Console.WriteLine("Give me a path");
-                    var repositoryPath = Console.ReadLine(); 
-                    CountChanges(repositoryPath); 
-                    break; 
-                
-                case 0: 
-                    return; 
+                Console.WriteLine("Menu:"); 
+                Console.WriteLine("1. Count Changes"); 
+                Console.WriteLine("0. Exit"); 
+                Console.Write("Select an option: "); 
 
-                default: 
-                    Console.WriteLine("Invalid option. Try again."); 
-                    break; 
+                int option = int.Parse(Console.ReadLine());
+
+                switch(option)
+                { 
+                    case 1: 
+                        Console.WriteLine("Give me a path");
+                        var repositoryPath = Console.ReadLine(); 
+                        CountChanges(repositoryPath); 
+                        break; 
+                    
+                    case 0: 
+                        return; 
+
+                    default: 
+                        Console.WriteLine("Invalid option. Try again."); 
+                        break; 
+                }
             }
         }
-    }
 
-    public static void CountChanges(string repositoryPath) 
-    { 
-        using (var repo = new Repository(repositoryPath))
+        public static void CountChanges(string repositoryPath) 
         { 
-            var authorChanges = new Dictionary<string, (int additions, int deletions)>(); 
-
-            foreach (var commit in repo.Commits) 
+            using (var repo = new Repository(repositoryPath))
             { 
-                var changes = commit.Parents.Any() 
-                    ? repo.Diff.Compare<Patch>(commit.Parents.First().Tree, commit.Tree)
-                    : repo.Diff.Compare<Patch>(null, commit.Tree); 
-                
-                string authorName = commit.Author.Name; 
+                var authorChanges = new Dictionary<string, (int additions, int deletions)>(); 
 
-                int additions = changes.Sum(change => change.LinesAdded); 
-                int deletions = changes.Sum(change => change.LinesDeleted); 
-
-                if (authorChanges.ContainsKey(authorName))
+                foreach (var commit in repo.Commits) 
                 { 
-                    var (prevAdditions, prevDeletions) = authorChanges[authorName]; 
-                    authorChanges[authorName] = (prevAdditions + additions, prevDeletions + deletions); 
+                    var changes = commit.Parents.Any() 
+                        ? repo.Diff.Compare<Patch>(commit.Parents.First().Tree, commit.Tree)
+                        : repo.Diff.Compare<Patch>(null, commit.Tree); 
+                    
+                    string authorName = commit.Author.Name; 
+
+                    int additions = changes.Sum(change => change.LinesAdded); 
+                    int deletions = changes.Sum(change => change.LinesDeleted); 
+
+                    if (authorChanges.ContainsKey(authorName))
+                    { 
+                        var (prevAdditions, prevDeletions) = authorChanges[authorName]; 
+                        authorChanges[authorName] = (prevAdditions + additions, prevDeletions + deletions); 
+                    }
+                    else 
+                    { 
+                        authorChanges[authorName] = (additions, deletions); 
+
+                    }
                 }
-                else 
+
+                var tableData = new List<List<object>>(); 
+
+                foreach (var kvp in authorChanges) 
                 { 
-                    authorChanges[authorName] = (additions, deletions); 
-
+                    var row = new List<object>(); 
+                    row.Add(kvp.Key); 
+                    row.Add(kvp.Value.additions); 
+                    row.Add(kvp.Value.deletions);
+                    tableData.Add(row); 
                 }
+
+                ConsoleTableBuilder
+                    .From(tableData)
+                    .WithTitle("Ch-ch-changes", ConsoleColor.Yellow, ConsoleColor.DarkGray)
+                    .WithColumn("Name", "Additions", "Deletions")
+                    .ExportAndWriteLine();
+
             }
-
-            var tableData = new List<List<object>>(); 
-
-            foreach (var kvp in authorChanges) 
-            { 
-                var row = new List<object>(); 
-                row.Add(kvp.Key); 
-                row.Add(kvp.Value.additions); 
-                row.Add(kvp.Value.deletions);
-                tableData.Add(row); 
-            }
-
-            ConsoleTableBuilder
-                .From(tableData)
-                .WithTitle("Ch-ch-changes", ConsoleColor.Yellow, ConsoleColor.DarkGray)
-                .WithColumn("Name", "Additions", "Deletions")
-                .ExportAndWriteLine();
-
         }
     }
 }
