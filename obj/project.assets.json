@@ -155,19 +155,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/tpeck/.nuget/packages/": {}
+    "/Users/tyler/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/tpeck/Projects/git-thing/git-thing.csproj",
+      "projectUniqueName": "/Users/tyler/Projects/git-glory/git-thing.csproj",
       "projectName": "git-thing",
-      "projectPath": "/Users/tpeck/Projects/git-thing/git-thing.csproj",
-      "packagesPath": "/Users/tpeck/.nuget/packages/",
-      "outputPath": "/Users/tpeck/Projects/git-thing/obj/",
+      "projectPath": "/Users/tyler/Projects/git-glory/git-thing.csproj",
+      "packagesPath": "/Users/tyler/.nuget/packages/",
+      "outputPath": "/Users/tyler/Projects/git-glory/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/tpeck/.nuget/NuGet/NuGet.Config"
+        "/Users/tyler/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -216,7 +216,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.307/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.400/RuntimeIdentifierGraph.json"
       }
     }
   }

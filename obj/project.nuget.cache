@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "cCJ2uf0QJ4RCR06CY4bcr3Jp4G7Zrtw57BzAORfKMoXwdOfJuKxGxsHcwGb+BNNPXWs8n40MIRvbJ1gWygrpUg==",
+  "dgSpecHash": "/F5UQ+eGWC7EHpyBKrt89diqgZ+TET53MrwuHcugwgCw9cu4+ucjxvNyzHwWFhjnY9jR6shX9XzRp7Dcy5Hhnw==",
   "success": true,
-  "projectFilePath": "/Users/tpeck/Projects/git-thing/git-thing.csproj",
+  "projectFilePath": "/Users/tyler/Projects/git-glory/git-thing.csproj",
   "expectedPackageFiles": [
-    "/Users/tpeck/.nuget/packages/consoletableext/3.2.0/consoletableext.3.2.0.nupkg.sha512",
-    "/Users/tpeck/.nuget/packages/libgit2sharp/0.27.2/libgit2sharp.0.27.2.nupkg.sha512",
-    "/Users/tpeck/.nuget/packages/libgit2sharp.nativebinaries/2.0.320/libgit2sharp.nativebinaries.2.0.320.nupkg.sha512"
+    "/Users/tyler/.nuget/packages/consoletableext/3.2.0/consoletableext.3.2.0.nupkg.sha512",
+    "/Users/tyler/.nuget/packages/libgit2sharp/0.27.2/libgit2sharp.0.27.2.nupkg.sha512",
+    "/Users/tyler/.nuget/packages/libgit2sharp.nativebinaries/2.0.320/libgit2sharp.nativebinaries.2.0.320.nupkg.sha512"
   ],
   "logs": []
 }
